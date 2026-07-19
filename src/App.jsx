@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Board from "./components/Board";
+import Board from "./components/Board.jsx";
 
-import { checkWinner } from "./utils/gameLogic.js";
+import Header from "./components/Header.jsx";
+import { checkWinner, isBoardFull } from "./utils/gameLogic.js";
 
 function App() {
   const [boardState, setBoardState] = useState([
@@ -20,6 +21,8 @@ function App() {
   const [winner, setWinner] = useState(null);
 
   function handleSquareClick(index) {
+    if (winner !== null) return;
+
     if (boardState[index] !== null) {
       return;
     }
@@ -33,14 +36,19 @@ function App() {
     if (result) {
       setWinner(result);
     } else {
-      setCurrentPlayer((prevPlayer) => {
-        return prevPlayer === "X" ? "O" : "X";
-      });
+      if (isBoardFull(newBoard)) {
+        setWinner("Draw");
+      } else {
+        setCurrentPlayer((prevPlayer) => {
+          return prevPlayer === "X" ? "O" : "X";
+        });
+      }
     }
   }
 
   return (
     <div className="App">
+      <Header winner={winner} />
       <Board boardState={boardState} handleSquareClick={handleSquareClick} />
     </div>
   );

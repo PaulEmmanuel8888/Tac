@@ -21,3 +21,7 @@ export function checkWinner(board) {
 
   return null;
 }
+
+export function isBoardFull(board) {
+  return board.every((square) => square !== null);
+}
