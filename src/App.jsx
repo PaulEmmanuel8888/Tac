@@ -5,20 +5,17 @@ import Header from "./components/Header.jsx";
 import { checkWinner, isBoardFull } from "./utils/gameLogic.js";
 
 function App() {
-  const [boardState, setBoardState] = useState([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
+  const EMPTY_BOARD = Array(9).fill(null);
+  const [boardState, setBoardState] = useState(EMPTY_BOARD);
 
   const [currentPlayer, setCurrentPlayer] = useState("X");
   const [winner, setWinner] = useState(null);
+
+  function restartGame() {
+    setBoardState([...EMPTY_BOARD]);
+    setWinner(null);
+    setCurrentPlayer("X");
+  }
 
   function handleSquareClick(index) {
     if (winner !== null) return;
@@ -48,7 +45,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header winner={winner} />
+      <Header
+        winner={winner}
+        restartGame={restartGame}
+        currentPlayer={currentPlayer}
+      />
       <Board boardState={boardState} handleSquareClick={handleSquareClick} />
     </div>
   );
