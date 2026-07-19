@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Board from "./components/Board.jsx";
 import Header from "./components/Header.jsx";
 import { checkWinner, isBoardFull } from "./utils/gameLogic.js";
@@ -6,23 +6,31 @@ import ScoreBoard from "./components/ScoreBoard.jsx";
 
 function App() {
   const EMPTY_BOARD = Array(9).fill(null);
+  const INITIAL_SCORES = {
+    X: 0,
+    O: 0,
+    Draws: 0,
+  };
   const [boardState, setBoardState] = useState(EMPTY_BOARD);
 
   const [currentPlayer, setCurrentPlayer] = useState("X");
   const [winner, setWinner] = useState(null);
 
-  const [scores, setScores] = useState({
-    X: 0,
-    O: 0,
-    Draws: 0,
+  function saveToLocalStorage() {
+    localStorage.setItem("scores", JSON.stringify(scores));
+  }
+
+  const [scores, setScores] = useState(() => {
+    const savedScores = localStorage.getItem("scores");
+    return savedScores ? JSON.parse(savedScores) : INITIAL_SCORES;
   });
 
+  useEffect(() => {
+    saveToLocalStorage();
+  }, [scores]);
+
   function resetBoard() {
-    setScores({
-      X: 0,
-      O: 0,
-      Draws: 0,
-    });
+    setScores({ ...INITIAL_SCORES });
   }
 
   function updateScores(outcome) {

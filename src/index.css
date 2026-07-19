@@ -88,7 +88,7 @@ body {
 }
 .scoreboard-main {
   background-color: #bda683;
-  border: 5px solid #bda683;
+  border: 10px solid #bda683;
   min-height: 65vh;
   border-radius: 20px;
   overflow: hidden;
