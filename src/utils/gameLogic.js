@@ -14,7 +14,10 @@ export function checkWinner(board) {
     if (values[0]) {
       const result = values.every((value) => value === values[0]);
       if (result) {
-        return values[0];
+        return {
+          winner:values[0],
+          pattern
+        }
       }
     }
   }

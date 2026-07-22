@@ -80,7 +80,10 @@ body {
 .restart-btn:hover {
   transform: scale(1.1);
 }
-.winner {
+.square.winner {
+  background: #b7a994;
+  transform: scale(1.08);
+  box-shadow: 0 0 10px #bda683;
 }
 .scoreboard {
   width: 35%;

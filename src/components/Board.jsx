@@ -1,6 +1,6 @@
 import Square from "./Square";
 
-const Board = ({ boardState, handleSquareClick }) => {
+const Board = ({ boardState, handleSquareClick, winningPattern }) => {
   return (
     <>
       <div className="board">
@@ -10,6 +10,7 @@ const Board = ({ boardState, handleSquareClick }) => {
             value={value}
             index={index}
             handleClick={handleSquareClick}
+            isWinningSquare={winningPattern?.includes(index)}
           />
         ))}
       </div>

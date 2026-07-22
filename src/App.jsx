@@ -15,6 +15,7 @@ function App() {
 
   const [currentPlayer, setCurrentPlayer] = useState("X");
   const [winner, setWinner] = useState(null);
+  const [winningPattern, setWinningPattern] = useState(null);
 
   function saveToLocalStorage() {
     localStorage.setItem("scores", JSON.stringify(scores));
@@ -45,6 +46,7 @@ function App() {
   function restartGame() {
     setBoardState([...EMPTY_BOARD]);
     setWinner(null);
+    setWinningPattern(null);
     setCurrentPlayer("X");
   }
 
@@ -62,8 +64,9 @@ function App() {
     setBoardState(newBoard);
 
     if (result) {
-      setWinner(result);
-      updateScores(result);
+      setWinner(result.winner);
+      updateScores(result.winner);
+      setWinningPattern(result.pattern);
     } else {
       if (isBoardFull(newBoard)) {
         setWinner("Draw");
@@ -85,7 +88,11 @@ function App() {
       />
       <div className="main">
         <ScoreBoard scores={scores} resetBoard={resetBoard} />
-        <Board boardState={boardState} handleSquareClick={handleSquareClick} />
+        <Board
+          boardState={boardState}
+          handleSquareClick={handleSquareClick}
+          winningPattern={winningPattern}
+        />
       </div>
     </div>
   );
